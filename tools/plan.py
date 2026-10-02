@@ -93,7 +93,7 @@ for i, (name, t) in enumerate(starts):
     sc = {'id': f'{i:02d}', 'scene': name, 'from': t, 'to': round(to, 3)}
     if name in HOLD: sc['hold'] = HOLD[name]
     scenes.append(sc)
-film = {'fps': 60, 'samples': 16, 'tier': 'premium', 'lyric': {'haloSpread': 9, 'shade': 0.5}, 'scenes': scenes}
+film = {'fps': 60, 'samples': 10, 'tier': 'standard', 'lyric': {'haloSpread': 9, 'shade': 0.5}, 'scenes': scenes}
 json.dump(film, open('film.json', 'w'), indent=1)
 for s in scenes:
     print(s['id'], f"{s['from']:7.2f} {s['to']:7.2f} {s['to']-s['from']:5.2f}", s['scene'])

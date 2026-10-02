@@ -1,7 +1,7 @@
 {
  "fps": 60,
- "samples": 16,
- "tier": "premium",
+ "samples": 10,
+ "tier": "standard",
  "lyric": {
   "haloSpread": 9,
   "shade": 0.5
