@@ -1,0 +1,21 @@
+{
+  "name": "genesis3-the-exile",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Code-rendered lyric film and portable renderer for Genesis 3 — The Exile",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "validate": "node tools/validate.mjs",
+    "still": "node tools/render.mjs still",
+    "render": "node tools/render.mjs film",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "playwright-core": "1.55.0",
+    "three": "0.180.0"
+  }
+}

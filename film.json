@@ -1,0 +1,368 @@
+{
+ "fps": 60,
+ "samples": 16,
+ "tier": "premium",
+ "lyric": {
+  "haloSpread": 9,
+  "shade": 0.5
+ },
+ "scenes": [
+  {
+   "id": "00",
+   "scene": "s00-title",
+   "from": 0.0,
+   "to": 10.86,
+   "hold": "the title opening over the instrumental, one continuous flight"
+  },
+  {
+   "id": "01",
+   "scene": "s01-creatures",
+   "from": 10.86,
+   "to": 16.99,
+   "hold": "one long sung line; the meadow breathes with it"
+  },
+  {
+   "id": "02",
+   "scene": "s02-sly",
+   "from": 16.99,
+   "to": 21.29
+  },
+  {
+   "id": "03",
+   "scene": "s03-turned",
+   "from": 21.29,
+   "to": 24.96
+  },
+  {
+   "id": "04",
+   "scene": "s04-every-tree",
+   "from": 24.96,
+   "to": 30.48
+  },
+  {
+   "id": "05",
+   "scene": "s05-we-eat",
+   "from": 30.48,
+   "to": 35.38
+  },
+  {
+   "id": "06",
+   "scene": "s06-orchard",
+   "from": 35.38,
+   "to": 39.67
+  },
+  {
+   "id": "07",
+   "scene": "s07-center",
+   "from": 39.67,
+   "to": 43.35
+  },
+  {
+   "id": "08",
+   "scene": "s08-touch",
+   "from": 43.35,
+   "to": 52.24,
+   "hold": "the slow creep toward the fruit is the point of the shot"
+  },
+  {
+   "id": "09",
+   "scene": "s09-lest",
+   "from": 52.24,
+   "to": 57.15
+  },
+  {
+   "id": "10",
+   "scene": "s10-replied",
+   "from": 57.15,
+   "to": 60.82
+  },
+  {
+   "id": "11",
+   "scene": "s11-no-death",
+   "from": 60.82,
+   "to": 65.73
+  },
+  {
+   "id": "12",
+   "scene": "s12-awake",
+   "from": 65.73,
+   "to": 73.7
+  },
+  {
+   "id": "13",
+   "scene": "s13-discern",
+   "from": 73.7,
+   "to": 80.44
+  },
+  {
+   "id": "14",
+   "scene": "s14-surge",
+   "from": 80.44,
+   "to": 86.56
+  },
+  {
+   "id": "15",
+   "scene": "s15-saw",
+   "from": 86.56,
+   "to": 90.84
+  },
+  {
+   "id": "16",
+   "scene": "s16-beauty",
+   "from": 90.84,
+   "to": 98.18,
+   "hold": "desire: a slow macro the music lingers on"
+  },
+  {
+   "id": "17",
+   "scene": "s17-plucked",
+   "from": 98.18,
+   "to": 100.01
+  },
+  {
+   "id": "18",
+   "scene": "s18-passed",
+   "from": 100.01,
+   "to": 106.73
+  },
+  {
+   "id": "19",
+   "scene": "s19-knew",
+   "from": 106.73,
+   "to": 111.57
+  },
+  {
+   "id": "20",
+   "scene": "s20-figs",
+   "from": 111.57,
+   "to": 115.88
+  },
+  {
+   "id": "21",
+   "scene": "s21-voice",
+   "from": 115.88,
+   "to": 119.53
+  },
+  {
+   "id": "22",
+   "scene": "s22-walking",
+   "from": 119.53,
+   "to": 124.39
+  },
+  {
+   "id": "23",
+   "scene": "s23-turned",
+   "from": 124.39,
+   "to": 129.26
+  },
+  {
+   "id": "24",
+   "scene": "s24-hid",
+   "from": 129.26,
+   "to": 137.77,
+   "hold": "the near-silent breakdown: a held breath in the thicket"
+  },
+  {
+   "id": "25",
+   "scene": "s25-called",
+   "from": 137.77,
+   "to": 144.43
+  },
+  {
+   "id": "26",
+   "scene": "s26-afraid",
+   "from": 144.43,
+   "to": 151.68
+  },
+  {
+   "id": "27",
+   "scene": "s27-who-told",
+   "from": 151.68,
+   "to": 154.71
+  },
+  {
+   "id": "28",
+   "scene": "s28-forbade",
+   "from": 154.71,
+   "to": 160.15
+  },
+  {
+   "id": "29",
+   "scene": "s29-blame",
+   "from": 160.15,
+   "to": 166.79
+  },
+  {
+   "id": "30",
+   "scene": "s30-what",
+   "from": 166.79,
+   "to": 172.22
+  },
+  {
+   "id": "31",
+   "scene": "s31-tricked",
+   "from": 172.22,
+   "to": 178.84
+  },
+  {
+   "id": "32",
+   "scene": "s32-to-serpent",
+   "from": 178.84,
+   "to": 183.05
+  },
+  {
+   "id": "33",
+   "scene": "s33-curse",
+   "from": 183.05,
+   "to": 187.26
+  },
+  {
+   "id": "34",
+   "scene": "s34-beast",
+   "from": 187.26,
+   "to": 192.67
+  },
+  {
+   "id": "35",
+   "scene": "s35-belly",
+   "from": 192.67,
+   "to": 196.27
+  },
+  {
+   "id": "36",
+   "scene": "s36-dust-food",
+   "from": 196.27,
+   "to": 202.26
+  },
+  {
+   "id": "37",
+   "scene": "s37-enmity",
+   "from": 202.26,
+   "to": 207.07
+  },
+  {
+   "id": "38",
+   "scene": "s38-heel",
+   "from": 207.07,
+   "to": 212.46
+  },
+  {
+   "id": "39",
+   "scene": "s39-pain",
+   "from": 212.46,
+   "to": 223.25,
+   "hold": "the seed splitting is slow by nature"
+  },
+  {
+   "id": "40",
+   "scene": "s40-rule",
+   "from": 223.25,
+   "to": 231.05,
+   "hold": "two shadows; stillness carries the weight"
+  },
+  {
+   "id": "41",
+   "scene": "s41-to-adam",
+   "from": 231.05,
+   "to": 240.12,
+   "hold": "the storm pull-back over three lines"
+  },
+  {
+   "id": "42",
+   "scene": "s42-cursed",
+   "from": 240.12,
+   "to": 249.21,
+   "hold": "a time-lapse needs its length"
+  },
+  {
+   "id": "43",
+   "scene": "s43-thorn",
+   "from": 249.21,
+   "to": 256.48
+  },
+  {
+   "id": "44",
+   "scene": "s44-sweat",
+   "from": 256.48,
+   "to": 258.9
+  },
+  {
+   "id": "45",
+   "scene": "s45-earth",
+   "from": 258.9,
+   "to": 266.16
+  },
+  {
+   "id": "46",
+   "scene": "s46-return",
+   "from": 266.16,
+   "to": 272.22
+  },
+  {
+   "id": "47",
+   "scene": "s47-life",
+   "from": 272.22,
+   "to": 280.7,
+   "hold": "the bridge: flowers opening, mercy"
+  },
+  {
+   "id": "48",
+   "scene": "s48-garments",
+   "from": 280.7,
+   "to": 290.4,
+   "hold": "firelight; tenderness is slow"
+  },
+  {
+   "id": "49",
+   "scene": "s49-one-of-us",
+   "from": 290.4,
+   "to": 298.96,
+   "hold": "the far tree across the river"
+  },
+  {
+   "id": "50",
+   "scene": "s50-lest-he-reach",
+   "from": 298.96,
+   "to": 303.26
+  },
+  {
+   "id": "51",
+   "scene": "s51-tree-of-life",
+   "from": 303.26,
+   "to": 311.82,
+   "hold": "the tree of life: a slow orbit of the one thing out of reach"
+  },
+  {
+   "id": "52",
+   "scene": "s52-sent",
+   "from": 311.82,
+   "to": 316.68
+  },
+  {
+   "id": "53",
+   "scene": "s53-to-work",
+   "from": 316.68,
+   "to": 324.58,
+   "hold": "the lone walk away"
+  },
+  {
+   "id": "54",
+   "scene": "s54-drove",
+   "from": 324.58,
+   "to": 331.87
+  },
+  {
+   "id": "55",
+   "scene": "s55-cherubs",
+   "from": 331.87,
+   "to": 338.94
+  },
+  {
+   "id": "56",
+   "scene": "s57-path",
+   "from": 338.94,
+   "to": 349.56,
+   "hold": "the ending: a long hold to the last sound"
+  }
+ ]
+}
