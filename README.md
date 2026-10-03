@@ -2,6 +2,10 @@
 
 A song and code-rendered lyric film of Genesis 3 in the Septuagint wording: the serpent, the eating, the hiding, the judgement, the garments of skin and the exile from the garden of Delight, told through light.
 
+Built with the Ark engine: https://github.com/omiron33/ark-video-studio
+
+Listen and watch: [technochristianity.com/music](https://technochristianity.com/music) · [TechnoChristianity on YouTube](https://www.youtube.com/@technochristianity)
+
 <!-- Poster: add docs/poster.jpg and uncomment
 ![Genesis 3 — The Exile](docs/poster.jpg)
 -->
