@@ -2,8 +2,8 @@
 // In the cold orchard, low between two rows: a soft column of warm light comes walking down the aisle
 // toward us, seen over the man's shoulder: his dark head and shoulder stand soft in the right of the
 // frame, watching it come (a MakeHuman figure, lib/x-human.js). No figure in the light, only presence: the grass bows away from it, the leaves of each tree turn and
-// flash as it passes, its warmth falls on the trunks and the ground. As the line ends it turns aside
-// and passes behind the trunks of the near row, its light breaking between them.
+// flash as it passes, its warmth falls on the trunks and the ground. It keeps coming, slowly and
+// steadily, down the middle of the aisle and the middle of the frame; the camera holds its gaze.
 import { grade, ease, clamp01, drift, mix, keys } from '/song/lib/look.js';
 import { GARDEN_GLSL, GARDEN_UNIFORMS, orchardGround } from '/song/lib/x-garden.js';
 import { NEAR_GLSL } from '/song/lib/x-garden-near.js';
@@ -18,10 +18,10 @@ const X0 = 118;                      // camera
 export function walkPath(P) {
   return (t) => {
     const u = clamp01((t - P.from) / (P.to - P.from));
-    // down the aisle toward us, then aside, behind the near row's trunks (z = 258)
-    const x = mix(176, 136, ease.inOut3(clamp01(u / 0.8)));
-    const z = Z + 8.5 * ease.inOut3(clamp01((u - 0.62) / 0.38));
-    return [x, orchardGround(x, z), z];
+    // down the middle of the aisle toward us, at a slow, even walk (eased only a little)
+    const k = 0.75 * u + 0.25 * ease.inOut3(u);
+    const x = mix(176, 150, k);
+    return [x, orchardGround(x, Z), Z];
   };
 }
 
@@ -32,8 +32,10 @@ export function walkCamera(P) {
     const d = drift(t, 0.012);
     const L = path(t);
     const g = orchardGround(X0, Z - 1);
-    const pos = [X0 + 2.5 * ease.inOut3(u) + d[0], g + 1.42 + d[1], Z - 1.2];
-    const target = [L[0], g + 1.6, mix(Z, L[2], 0.6)];
+    const pos = [X0 + 1.5 * ease.inOut3(u) + d[0], g + 1.42 + d[1], Z - 1.2];
+    // the gaze holds straight down the aisle at the light, which walks toward us along the line of
+    // sight: it stays in the centre of the frame and the camera never pans
+    const target = [L[0], g + 1.6, Z];
     const focus = Math.hypot(L[0] - pos[0], L[2] - pos[2]);
     return { pos, target, fov: 38, roll: 0.0, focus, aperture: 0.016 };
   };

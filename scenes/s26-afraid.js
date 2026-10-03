@@ -23,7 +23,7 @@ export default async (P) => {
   };
   return shameShot(P, {
     name: 's26-afraid', cam, drift: 0.004, far: 70, shafts: 0.0,
-    defines: '#define SH_LEAVES\n#define SH_BUSH\n#define SH_FIGS\n#define SH_HUMAN\n#define HUM_NEPS 0.006\n#define SH_HUM_A\n#define HUM_RIM 1.8\n' + humanGLSL(['uHumA']),
+    defines: '#define SH_LEAVES\n#define SH_BUSH\n#define SH_FIGS\n#define SH_HUMAN\n#define HUM_NEPS 0.006\n#define SH_HUM_A\n#define SH_PART_SMOOTH\n#define HUM_RIM 1.8\n' + humanGLSL(['uHumA']),
     uniforms: { uGrassH: 0.2, uCold: 1.0, uDusk: 0.55, uDens: 0.9, uClear: [0.0, 4.0, 5.5], uFog: 0.012, uMist: 0.02, uCanopy: 0.6, uSunSh: 0.0,
       uGodK: 1.0, uGodR: 8.0, uGodScat: 0.3, uSunD: [0.5, 0.1, -0.8],
       uFigOn: [1, 0, 0], ...HA.uniforms('uHumA'),
