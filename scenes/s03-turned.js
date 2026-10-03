@@ -6,6 +6,8 @@ import { grade, ease, clamp } from '/song/lib/look.js';
 import { SERPENT_GLSL, SERPENT_UNIFORMS, pathFn, pose, applyPose, tongue, V } from '/song/lib/x-serpent.js';
 import { ENV_GLSL } from '/song/lib/x-serpent-env.js';
 import lyrics from '/timing.js';
+import * as THREE from 'three';
+import { silhouette } from '/song/lib/x-human.js';
 
 export const kind = 'shader';
 
@@ -13,7 +15,9 @@ const SUN = V.nrm([0.05, 0.11, 1]);
 const WOMAN = [-1.3, 0, 18];     // her feet on the meadow
 const H = [0.0, 1.85, 0.0];      // the serpent's head, on a limb above the meadow
 
-export default (P) => {
+export default async (P) => {
+  // the woman: the MakeHuman figure (lib/x-human.js) as a flat backlit silhouette seen from behind
+  const SIL = await silhouette('woman-bare-still');
   const ws = lyrics.words.filter((w) => w.start >= P.from - 0.3 && w.start < P.to);
   const tTurn = (ws.find((w) => /turned/i.test(w.w)) ?? { start: P.from + 0.9 }).start;
   const tWoman = (ws.find((w) => /woman/i.test(w.w)) ?? { start: P.from + 2.2 }).start;
@@ -48,6 +52,13 @@ export default (P) => {
     frag: SERPENT_GLSL + ENV_GLSL + /* glsl */ `
 uniform vec3 uWoman;
 uniform float uFlare;
+uniform sampler2D uSil; uniform vec4 uSilB;
+// her silhouette (2D signed distance in metres, feet at 0), swaying a very little in the warm air
+float silSD(vec2 p, float t) {
+  p.x -= 0.01 * sin(t * 0.9) * p.y;
+  vec2 uv = (p - uSilB.xy) / uSilB.zw, uc = clamp(uv, 0.0, 1.0);
+  return texture(uSil, uc).r + length((uv - uc) * uSilB.zw);
+}
 float envSDF(vec3 p, out float id) {
   id = 10.0;
   // the limb below him
@@ -87,7 +98,7 @@ vec3 far(vec3 ro, vec3 rd) {
       vec2 q = vec2(-(q3.x - uWoman.x), q3.y - uWoman.y);
       float bwq = cocA(sw) * sw + 0.004;
       if (q.y > -0.1 - 3.0 * bwq && q.y < 1.9 + 3.0 * bwq && abs(q.x) < 0.6 + 3.0 * bwq) {
-        float sdw = womanSD(q, uTime);
+        float sdw = silSD(q, uTime);
         float bw2 = cocA(sw) * sw + 0.004;
         float aw = smoothstep(bw2, -bw2, sdw);
         float rim = exp(-max(sdw, 0.0) / (0.006 + bw2)) * smoothstep(-0.03 - bw2, 0.0, sdw) * (0.35 + 0.65 * smoothstep(1.1, 1.65, q.y)) * 0.01 / (0.01 + bw2);
@@ -134,7 +145,7 @@ vec3 shade(vec2 fc) {
   else { vec3 alb; float rough, spec; envMat(p, n, id, alb, rough, spec); col = lightSurf(p, n, rd, alb, rough, vec3(spec), sh, ao, 0.3); }
   return col * uExp;
 }`,
-    uniforms: { ...SERPENT_UNIFORMS(), uSunDir: SUN, uSunCol: [3.0, 2.0, 1.0], uSkyCol: [0.35, 0.33, 0.3], uGndCol: [0.4, 0.28, 0.12], uWoman: WOMAN, uFlare: 0 },
+    uniforms: { ...SERPENT_UNIFORMS(), uSunDir: SUN, uSunCol: [3.0, 2.0, 1.0], uSkyCol: [0.35, 0.33, 0.3], uGndCol: [0.4, 0.28, 0.12], uWoman: WOMAN, uFlare: 0, uSil: SIL.tex, uSilB: new THREE.Vector4(...SIL.lo, ...SIL.size) },
     camera: cam,
     update(t, u) {
       const ps = poseT(t);

@@ -4,9 +4,12 @@
 // into the dark trunks, and their shadows run long toward us over the grass.
 import { ease, linesAt, wordIn, clamp } from '/song/lib/look.js';
 import { shameShot, prog } from '/song/lib/x-shame.js';
+import { humanAtlas, humanGLSL, walkKeys, walking } from '/song/lib/x-human.js';
 export const kind = 'shader';
 
-export default (P) => {
+export default async (P) => {
+  // the man and the woman, MakeHuman figures in fig-leaf girdles, walking with the rig's cycle
+  const HA = await humanAtlas(walkKeys('man-leaves')), HB = await humanAtlas(walkKeys('woman-leaves'));
   const [L] = linesAt(P.from - 2.5, 'Adam and his wife turned');
   const tTurn = wordIn(L, 'turned').start;
   // distance walked: nothing until they turn, then an uneasy walk that quickens
@@ -17,9 +20,9 @@ export default (P) => {
   };
   return shameShot(P, {
     name: 's23-turned', cam, drift: 0.006, far: 70, shafts: 1.0,
-    defines: '#define SH_FIGS\n#define SH_BUSH\n',
+    defines: '#define SH_FIGS\n#define SH_BUSH\n#define SH_HUMAN\n#define SH_HUM_A\n#define SH_HUM_B\n#define HUM_RIM 1.5\n' + humanGLSL(['uHumA', 'uHumB']),
     uniforms: { uGrassH: 0.25, uCold: 1.0, uDusk: 0.2, uDens: 0.9, uClear: [0.0, 8.0, 7.0], uFog: 0.009, uMist: 0.025, uCanopy: 0.6, uSunSh: 0.0,
-      uGodK: 1.3, uGodR: 15.0, uGodScat: 0.35, uSunD: [0.5, 0.15, -0.8], uFigOn: [1, 1, 0] },
+      uGodK: 1.3, uGodR: 15.0, uGodScat: 0.35, uSunD: [0.5, 0.15, -0.8], uFigOn: [1, 1, 0], ...HA.uniforms('uHumA'), ...HB.uniforms('uHumB') },
     update(t, u) {
       // the light stands low among the far trunks, drifting a little as if looking
       u.uGodP.value.set(0.6 + 1.5 * Math.sin((t - P.from) * 0.22), 1.6, 30.0);
@@ -32,8 +35,8 @@ export default (P) => {
       const dA = [-Math.sin(1.75), Math.cos(1.75)], dB = [-Math.sin(1.85), Math.cos(1.85)];
       u.uFigA.value.set(0.55 + dA[0] * sA, 11.2 + dA[1] * sA, yawA);
       u.uFigB.value.set(-0.35 + dB[0] * sB, 10.6 + dB[1] * sB, yawB);
-      u.uPoseA.value.set(sA * 5.6, Math.min(1, sA * 1.5) * 0.55, 0.18 + 0.15 * turnA);
-      u.uPoseB.value.set(sB * 5.8 + 1.2, Math.min(1, sB * 1.5) * 0.5, 0.25 + 0.2 * turnB);
+      u.uPoseA.value.set(...walking(HA, 'man-leaves', sA, 1.45));
+      u.uPoseB.value.set(...walking(HB, 'woman-leaves', sB, 1.3, 0.2));
     },
   });
 };

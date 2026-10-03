@@ -60,7 +60,7 @@ vec3 shade(vec2 fc) {
   float tdrip = -1.0;
   if (uDrip > 0.0) {
     // the broken end in world space (inverse of toSpray is approximated: the end moves little)
-    vec3 e = fromSpray(vec3(0.007, -0.034, 0.003));
+    vec3 e = fromSpray(vec3(0.0055, -0.0215, 0.0022));   // the torn stub's end on the spur
     float fallY = max(uDrip - 0.55, 0.0);
     vec3 dp = e + vec3(0.0, -0.0025 - 1.2 * fallY * fallY - 0.1 * fallY, 0.0);
     float r = 0.0018 + 0.0017 * sat(uDrip / 0.55);
@@ -88,7 +88,7 @@ vec3 shade(vec2 fc) {
   vec3 c = alb * sunC() * sat(dot(n, SUN)) + vec3(0.075, 0.16, 0.025) * sunC() * sat(-dot(n, SUN)) * 0.35 * (1.0 - 0.5 * mid - 0.3 * lat) + alb * skyAmb();
   return c;
 }`,
-    uniforms: { ...WORLD_UNIFORMS, ...FRUIT_UNIFORMS, uSprayO: O, uSprayYaw: 0.25, uLeafN: 12, uAmbK: 1.9, uDew: 0.5, uFocus: 0.42, uAper: 0.003, uFall: 0, uDrip: 0 },
+    uniforms: { ...WORLD_UNIFORMS, ...FRUIT_UNIFORMS, uBlush: -1.3, uSprayO: O, uSprayYaw: 0.25, uLeafN: 12, uAmbK: 1.9, uDew: 0.5, uFocus: 0.42, uAper: 0.003, uFall: 0, uDrip: 0 },
     camera: cam,
     textPlane(t, c) { return cameraPlane(c, { width: 1, dist: 1, aspect: 16 / 9 }); },
     update(t, u) {

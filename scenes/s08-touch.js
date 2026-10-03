@@ -10,7 +10,7 @@ import { cameraPlane } from '/engine.js';
 
 export const kind = 'shader';
 const O = [0.0, 1.2, 0.0];
-const F = [O[0], O[1] - 0.081, O[2]];
+const F = [O[0], O[1] - 0.067, O[2]];   // the apple's centre (FC in x-tree-fruit.js)
 
 export default (P) => {
   const [, B] = linesAt(P.from - 0.6, 'God told us', 'not even to touch');
@@ -37,7 +37,7 @@ vec3 shade(vec2 fc) {
   vec3 p = ro + rd * t;
   return shadeSpray(p, rd, id, li, bokehBG(reflect(rd, sprayNormal(p)), uWarm, 0.4), uSunK);
 }`,
-    uniforms: { ...WORLD_UNIFORMS, ...FRUIT_UNIFORMS, uSprayO: O, uSprayYaw: -1.2, uDew: 0.0, uLeafN: 12, uFrontO: [-0.2, 0.03, -0.42], uFrontN: 4, uFrontYaw: 0.9, uSunDir: [0.15, 0.3, -0.94], uSunCol: [4.6, 4.5, 4.2],
+    uniforms: { ...WORLD_UNIFORMS, ...FRUIT_UNIFORMS, uBlush: -2.2, uSprayO: O, uSprayYaw: -1.2, uDew: 0.0, uLeafN: 12, uFrontO: [-0.2, 0.03, -0.42], uFrontN: 4, uFrontYaw: 0.9, uSunDir: [0.15, 0.3, -0.94], uSunCol: [4.6, 4.5, 4.2],
       uFocus: 1.4, uAper: 0.016, uWarm: 0.25, uSunK: 1.0 },
     camera: cam,
     textPlane(t, c) { return cameraPlane(c, { width: 1, dist: 1, aspect: 16 / 9 }); },

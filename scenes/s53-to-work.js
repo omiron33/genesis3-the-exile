@@ -6,9 +6,12 @@
 import { grade, ease, clamp01, drift } from '/song/lib/look.js';
 import { exileScene } from '/song/lib/x-exile-scene.js';
 import { groundH, lerp } from '/song/lib/x-exile.js';
+import { exileHuman } from '/song/lib/x-exile-human.js';
 export const kind = 'shader';
 
-export default (P) => {
+export default async (P) => {
+  // the man in his garment of skin, walking with the rig's tired walk (lib/x-exile-human.js)
+  const HU = await exileHuman({ rim: 1.4 });
   const D = P.to - P.from;
   // the walker: out of the gate's light, toward the camera's left, a slow tired walk
   const W0 = [1.5, -70.0], dir = (() => { const v = [-0.36, -1.0]; const l = Math.hypot(...v); return [v[0] / l, v[1] / l]; })();
@@ -26,10 +29,10 @@ export default (P) => {
     return { pos: [x + d[0], y + d[1], z], target: tgt, fov: 42, focus, aperture: 0.03 };
   };
   return exileScene(P, {
-    name: 's53-to-work', cam,
+    name: 's53-to-work', cam, pre: HU.pre, uniforms: HU.uniforms,
     set: (t) => {
       const w = walkPos(t);
-      return { uGlow: 1.0, uLife: 0.6, uWalker: 1.0, uWalkP: [w[0], 0, w[1]], uWalkD: [dir[0], 0, dir[1]], uWalkPh: (t - P.from) * speed / 0.68 * Math.PI };
+      return { uGlow: 1.0, uLife: 0.6, uWalker: 1.0, uWalkP: [w[0], 0, w[1]], uWalkD: [dir[0], 0, dir[1]], uWalkPh: (t - P.from) * speed / 0.68 * Math.PI, uWalkHP: HU.walk((t - P.from) * speed / 1.36) };
     },
     post: (t) => grade(t, { exposure: 3.2, bloom: 0.14, threshold: 0.9, contrast: 1.05, saturation: 1.0, vignette: 0.6, lift: [0.004, 0.005, 0.01], grain: 0.018 }),
     finish: (t) => ({ grade: { shadows: [0.0, 0.012, 0.05], highlights: [1.0, 0.93, 0.8], amount: 0.5 } }),

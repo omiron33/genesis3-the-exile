@@ -10,3 +10,6 @@ intake/*
 .env
 .env.*
 *.log
+
+# the people baked by tools/make-humans.py (MakeHuman, CC0): rebuilt, never committed
+assets/humans/

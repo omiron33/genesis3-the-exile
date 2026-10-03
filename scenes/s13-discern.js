@@ -1,6 +1,6 @@
 // 13 · "Like gods you will discern / what is good and what is evil."
 // The pool beneath the tree, mirror-still: low at its edge we see the trunk standing in gold light
-// above, and the whole tree hanging upside down in the dark water below. A fruit drops past the lens
+// above, and the whole tree hanging upside down in the dark water below. An apple drops past the lens
 // and into the pool; the rings run out, and as they pass the reflection divides into two trees side
 // by side, one lit gold, one black. The rings run on to the edge of the frame.
 import { grade, ease, keys, linesAt, wordIn } from '/song/lib/look.js';
@@ -27,19 +27,43 @@ export default (P) => {
     frag: WORLD_GLSL + /* glsl */ `
 uniform float uSplit, uFall, uFocus, uAper;
 uniform vec3 uFruitW;
-// the falling fruit: a small red sphere with the tree fruit's skin
+// the falling fruit: an apple (x-tree.js), tumbling as it drops, its short stem still on it
+const float FAR_ = 0.042;
+vec3 fallLocal(vec3 p) { vec3 f = p - uFruitW; f.xy = rot(0.4 + uTime * 2.3) * f.xy; f.xz = rot(0.7 + uTime * 1.1) * f.xz; return f; }
+float fallSD(vec3 p, out int part) {
+  vec3 f = fallLocal(p);
+  float d = appleSD(f / FAR_) * FAR_ * 0.9;
+  float st = tcap(f, vec3(0.0, 0.5 * FAR_, 0.0), vec3(0.0018, 0.5 * FAR_ + 0.026, 0.0009), 0.0019, 0.0016);
+  part = st < d ? 2 : 1;
+  return min(d, st);
+}
 float fallT(vec3 ro, vec3 rd) {
-  vec3 oc = ro - uFruitW; float b = dot(oc, rd), c = dot(oc, oc) - 0.045 * 0.045, h = b * b - c;
-  if (h < 0.0 || uFall < 0.5) return -1.0;
-  return -b - sqrt(h);
+  if (uFall < 0.5) return -1.0;
+  vec3 oc = ro - uFruitW; float b = dot(oc, rd), c = dot(oc, oc) - 0.07 * 0.07, h = b * b - c;
+  if (h < 0.0) return -1.0;
+  h = sqrt(h);
+  float t = max(-b - h, 0.0), t1 = -b + h;
+  int part;
+  for (int i = 0; i < 48; i++) {
+    float d = fallSD(ro + rd * t, part);
+    if (d < 0.0002 + 0.0005 * t * 0.01) return t;
+    t += d;
+    if (t > t1) break;
+  }
+  return -1.0;
 }
 vec3 shade(vec2 fc) {
   vec3 ro; vec3 rd = lensRay(fc, uFocus, uAper, ro);
   float jit = hash12(fc + fract(uTime * 7.31) * 57.0);
   float tf = fallT(ro, rd);
   if (tf > 0.0) {
-    vec3 p = ro + rd * tf, n = normalize(p - uFruitW);
-    return fruitSkin(n, rd, SUN, sunC(), skyAmb(), 1.0, n * 0.045);
+    vec3 p = ro + rd * tf;
+    int part; vec2 e = vec2(0.0003, 0.0);
+    vec3 n = normalize(vec3(fallSD(p + e.xyy, part) - fallSD(p - e.xyy, part), fallSD(p + e.yxy, part) - fallSD(p - e.yxy, part), fallSD(p + e.yyx, part) - fallSD(p - e.yyx, part)));
+    fallSD(p, part);
+    if (part == 2) { vec3 a = vec3(0.1, 0.075, 0.035); return a * sunC() * sat(dot(n, SUN)) + a * skyAmb(); }
+    float red; vec3 alb = appleAlb(fallLocal(p) / FAR_, 0.6, red);
+    return appleLight(alb, red, n, rd, SUN, sunC(), skyAmb(), gndAmb(), 1.0, sky(reflect(rd, n)) * 0.5);
   }
   float tpl = (WP - ro.y) / rd.y;
   vec3 q = ro + rd * tpl;

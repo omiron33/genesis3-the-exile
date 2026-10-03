@@ -5,9 +5,12 @@
 // dies with it (the grass slows but never stops). The camera creeps in, low, uneasy.
 import { ease, linesAt, wordIn, clamp } from '/song/lib/look.js';
 import { shameShot, prog } from '/song/lib/x-shame.js';
+import { humanAtlas, humanGLSL, rampPose, rampKeys } from '/song/lib/x-human.js';
 export const kind = 'shader';
 
-export default (P) => {
+export default async (P) => {
+  // the man and the woman as they were made, before the fig leaves: far off, only backlit shapes
+  const HA = await humanAtlas(rampKeys('man-bare-bow', 3)), HB = await humanAtlas(rampKeys('woman-bare-bow', 3));
   const [L1, L2] = linesAt(P.from - 2.5, 'Then both could see', 'their nakedness');
   const tSee = wordIn(L1, 'see').start, tNaked = wordIn(L2, 'naked').start;
   // the drain: begins as they see, complete just after "nakedness"
@@ -22,9 +25,9 @@ export default (P) => {
   };
   return shameShot(P, {
     name: 's19-knew', cam, drift: 0.006, far: 140,
-    defines: '#define SH_FIGS\n#define SH_BUSH\n',
+    defines: '#define SH_FIGS\n#define SH_BUSH\n#define SH_HUMAN\n#define SH_HUM_A\n#define SH_HUM_B\n#define HUM_RIM 1.5\n' + humanGLSL(['uHumA', 'uHumB']),
     uniforms: { uGrassH: 0.38, uCold: 0, uDusk: 0.0, uDens: 0.55, uClear: [1.5, 12, 19], uFog: 0.004, uMist: 0.0, uSunD: [-0.55, 0.1, 1.0],
-      uFigA: [-1.2, 21.0, 0.25], uFigB: [3.2, 23.5, -0.3], uFigOn: [1, 1, 0], uPoseA: [0, 0, 0], uPoseB: [0, 0, 0] },
+      uFigA: [-1.2, 21.0, 0.25], uFigB: [3.2, 23.5, -0.3], uFigOn: [1, 1, 0], uPoseA: [0, 0, 0], uPoseB: [0, 0, 0], ...HA.uniforms('uHumA'), ...HB.uniforms('uHumB') },
     update(t, u) {
       const c = cold(t);
       u.uCold.value = c;
@@ -35,8 +38,8 @@ export default (P) => {
       // they stand still, the man's head lowering first, then hers
       const bA = 0.6 * ease.inOut3(clamp((t - tNaked + 0.3) / 1.6, 0, 1));
       const bB = 0.75 * ease.inOut3(clamp((t - tNaked - 0.1) / 1.6, 0, 1));
-      u.uPoseA.value.set(0, 0, bA + 0.02 * Math.sin(t * 1.3));
-      u.uPoseB.value.set(0, 0, bB + 0.02 * Math.sin(t * 1.1 + 1));
+      u.uPoseA.value.set(...rampPose(HA, 'man-bare-bow', 3, bA / 0.6 * 0.8 + 0.03 * Math.sin(t * 1.3)));
+      u.uPoseB.value.set(...rampPose(HB, 'woman-bare-bow', 3, bB / 0.75 * 0.9 + 0.03 * Math.sin(t * 1.1 + 1)));
     },
     post(t) { const c = cold(t); return { saturation: 1.08 - 0.22 * c, gain: [1.04 - 0.08 * c, 1.0, 0.95 + 0.09 * c], lift: [0.012 - 0.004 * c, 0.011, 0.01 + 0.008 * c], contrast: 1.05 }; },
     finish(t) { const c = cold(t); return { grade: { shadows: [0.03 * (1 - c), 0.015, 0.035 * c], highlights: [1.0 - 0.05 * c, 0.95, 0.85 + 0.15 * c], amount: 0.45 } }; },

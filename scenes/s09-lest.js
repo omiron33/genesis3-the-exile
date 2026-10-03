@@ -19,7 +19,7 @@ export default (P) => {
   const C0 = [-2.5, 8.5, 10.0];
   const d = 1.25;
   const FC = [C0[0] + S[0] * d - 0.0, C0[1] + S[1] * d - 0.12, C0[2] + S[2] * d];
-  const H = [FC[0], FC[1] + 0.081, FC[2]];
+  const H = [FC[0], FC[1] + 0.067, FC[2]];   // the spray's origin, above the apple
   const cam = (t) => {
     const p = prog(t);
     // a slow drift that carries the fruit a little across the sun

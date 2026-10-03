@@ -7,10 +7,13 @@
 import { grade, ease, drift, linesAt, wordIn, clamp01, spring } from '/song/lib/look.js';
 import { MERCY_CORE, MERCY_UNIFORMS } from '/song/lib/x-mercy.js';
 import { GARMENT_GLSL, GARMENT_SCENE_GLSL, GARMENT_UNIFORMS } from '/song/lib/x-mercy-garment.js';
+import { humanAtlas, humanGLSL, pose } from '/song/lib/x-human.js';
 
 export const kind = 'shader';
 
-export default (P) => {
+export default async (P) => {
+  // the man and the woman hand in hand in their fig-leaf girdles (MakeHuman figures, lib/x-human.js)
+  const HA = await humanAtlas(['man-leaves-hold']), HB = await humanAtlas(['woman-leaves-hold']);
   const [A, , C] = linesAt(P.from - 0.6, 'The Lord God made garments', 'for Adam and his wife', 'and clothed them');
   const clothed = wordIn(C, 'clothed').start;
   const them = wordIn(C, 'them').start;
@@ -30,8 +33,9 @@ export default (P) => {
   };
   return {
     name: 's48-garments', from: P.from, to: P.to,
-    frag: MERCY_CORE + GARMENT_GLSL + GARMENT_SCENE_GLSL + 'vec3 shade(vec2 fc) { return garments(fc); }',
-    uniforms: { ...MERCY_UNIFORMS, ...GARMENT_UNIFORMS, uAper: 0.06 },
+    frag: '#define MG_HUMAN\n' + MERCY_CORE + humanGLSL(['uHumA', 'uHumB']) + GARMENT_GLSL + GARMENT_SCENE_GLSL + 'vec3 shade(vec2 fc) { return garments(fc); }',
+    uniforms: { ...MERCY_UNIFORMS, ...GARMENT_UNIFORMS, uAper: 0.06, ...HA.uniforms('uHumA'), ...HB.uniforms('uHumB'),
+      uManPose: pose(HA, 'man-leaves-hold'), uWomanPose: pose(HB, 'woman-leaves-hold') },
     camera: cam,
     update(t, u) {
       const c = cam(t);

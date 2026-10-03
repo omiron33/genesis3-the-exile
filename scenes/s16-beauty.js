@@ -10,7 +10,7 @@ import { FINISH } from '/premium/finish.js';
 
 export const kind = 'shader';
 const O = [0.0, 1.2, 0.0];
-const F = [O[0], O[1] - 0.081, O[2]];
+const F = [O[0], O[1] - 0.067, O[2]];   // the apple's centre (FC in x-tree-fruit.js)
 
 export default (P) => {
   const prog = (t) => Math.min(1, Math.max(0, (t - P.from) / (P.to - P.from)));
@@ -41,7 +41,7 @@ vec3 shade(vec2 fc) {
   vec3 p = ro + rd * t;
   return shadeSpray(p, rd, id, li, bokehBG(reflect(rd, sprayNormal(p)), 1.0, 0.6), 1.0);
 }`,
-    uniforms: { ...WORLD_UNIFORMS, ...FRUIT_UNIFORMS, uSprayO: O, uSprayYaw: 0.7, uDew: 1.0, uLeafN: 7, uFocus: 0.2, uAper: 0.0035 },
+    uniforms: { ...WORLD_UNIFORMS, ...FRUIT_UNIFORMS, uBlush: 2.7, uSprayO: O, uSprayYaw: 0.7, uDew: 1.0, uLeafN: 7, uFocus: 0.2, uAper: 0.0035 },
     camera: cam,
     textPlane(t, c) { return cameraPlane(c, { width: 1, dist: 1, aspect: 16 / 9 }); },
     update(t, u) {
