@@ -1,16 +1,14 @@
-# Genesis 3 — The Exile
+# Genesis 3, The Exile
 
 A song and code-rendered lyric film of Genesis 3 in the Septuagint wording: the serpent, the eating, the hiding, the judgement, the garments of skin and the exile from the garden of Delight, told through light.
 
 Built with the Ark engine: https://github.com/omiron33/ark-video-studio
 
-Listen and watch: [technochristianity.com/music](https://technochristianity.com/music) · [TechnoChristianity on YouTube](https://www.youtube.com/@technochristianity)
-
 <!-- Poster: add docs/poster.jpg and uncomment
-![Genesis 3 — The Exile](docs/poster.jpg)
+![Genesis 3, The Exile](docs/poster.jpg)
 -->
 
-[Watch the film](VIDEO_URL) · [Listen](SONG_URL) · [Download the song and video](RELEASE_URL)
+[Listen at TechnoChristianity](https://technochristianity.com/music) · [More films on YouTube](https://www.youtube.com/@technochristianity)
 
 The film runs **5:50** at **1920 × 1080 / 60 fps**. Every frame of its 57 scenes is drawn in code on the GPU: raymarched gardens, rivers, trees, a serpent, a storm and the cherubim at the east gate, with typography set to the sung onset of each word. Nothing in the picture is a photograph, a downloaded model or a generated image.
 
@@ -39,14 +37,14 @@ Full rendering is GPU intensive and takes many hours. The draft uses 30 fps and 
 
 ## Source layout
 
-- `film.json` — scene order and timings (57 scenes, cut on measured beats).
-- `scenes/` — one picture module and one lyric module per scene.
-- `lib/` — the film's worlds (garden, tree, serpent, shame, judgement, mercy, exile), the shared look and the typography.
-- `data/` — aligned sung words and lines, measured musical timing and who is speaking.
-- `fonts/` — Bebas Neue, the voice of God in the lyric layer.
-- `renderer/` — deterministic browser rendering and local FFmpeg encoding.
-- `tools/` — rendering, validation and the optional planning and timing utilities.
-- `intake/sung-lyrics.txt` — the sung lyric text.
+- `film.json`: scene order and timings (57 scenes, cut on measured beats).
+- `scenes/`: one picture module and one lyric module per scene.
+- `lib/`: the film's worlds (garden, tree, serpent, shame, judgement, mercy, exile), the shared look and the typography.
+- `data/`: aligned sung words and lines, measured musical timing and who is speaking.
+- `fonts/`: Bebas Neue, the voice of God in the lyric layer.
+- `renderer/`: deterministic browser rendering and local FFmpeg encoding.
+- `tools/`: rendering, validation and the optional planning and timing utilities.
+- `intake/sung-lyrics.txt`: the sung lyric text.
 
 [Visual brief](docs/BRIEF.md) · [Storyboard](docs/STORYBOARD.md) · [Scene architecture](docs/AUTHORING.md) · [Credits and licenses](docs/CREDITS.md)
 
