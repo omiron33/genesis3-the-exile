@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Code-rendered lyric film and portable renderer for Genesis 3 — The Exile",
+  "description": "Code-rendered lyric film and portable renderer for Genesis 3, The Exile",
   "license": "MIT",
   "engines": {
     "node": ">=22"
